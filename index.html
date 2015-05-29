@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hourly Rate</title>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/foundation/5.5.0/css/foundation.min.css">
+	<link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <!-- input fields to add a rule title and cost -->
+	<div class="small-6 small-centered columns">
+    <form>
+			<label for="ruleName"> Rule Name: </label>
+			<input type="text" name="ruleName" id="ruleName" placeholder="Rule Title"/>
+			<label for="rate">Rate of Cost:</label>
+			<input type="number" name="rate" id="rate" step="0.01" value="10.00"/>
+			<button type="submit" id="addRule" class="button expand">Add Rule</button>
+			<button id="next" class="button expand">Next</button>
+		</form>
+	</div>
+
+	<div class="displayRules hidden small-6 small-centered columns">
+		<label for="baseRate"> Base Rate:</label>
+		<input type="number" name="baseRate" id="baseRate" placeholder="Base Rate"/>
+	  <table>
+	  	<thead>
+	  		<tr>
+	  			<th>Rule Name</th>
+	  			<th>Rate $</th>
+	  			<th>Apply Rule?</th>
+	  		</tr>
+	  	</thead>
+	  	<tbody>
+	  		<!-- target area for jQuery to append -->
+	  	</tbody>
+	  </table>
+	  <button id='calculate'>Calculate</button>
+	</div>
+
+	<div class="displayTotal small-6 small-centered columns"></div>
+
+	<script src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+	<script src="main.js"></script>
+</body>
+</html>
