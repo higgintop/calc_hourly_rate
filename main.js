@@ -8,8 +8,15 @@
     $('#addRule').on('click', addRule);
     $('#next').on('click', revealRuleTable);
     $('#calculate').on('click', calcHourlyRate);
-  }); // init
+  }); 
 
+  // ***********************************************
+  // Goal: grab the value in Base Rate input field
+  //       once inputted value is valid
+  //       Then get the values of the 'checked'
+  //       values in table and call increaseRate
+  //       or decreaseRate accordingly
+  // ***********************************************
   function calcHourlyRate () {
     var $baseRateStr = $('#baseRate').val();
 
@@ -20,17 +27,21 @@
     }
 
     // get info from table
-    var baseRate = parseFloat($baseRateStr);
-    hourlyRate = baseRate;
+    var baseRate = parseInt($baseRateStr);
+
+    if (baseRate < 0) {
+      alert('Invalid Base Rate: Please enter a non-negative value');
+      return;
+    } else {
+      hourlyRate = baseRate;
+    }
 
     // get array of values from table
     var appliedRules = getAppliedRules();
-    console.log('appliedRules are', appliedRules);
 
     // loop over each value in array and call increaseRate
     // or decreaseRate
     appliedRules.forEach(function(value) {
-      console.log("the value is", value);
       if (value < 0) {
         decreaseRate(value);
       }
@@ -44,11 +55,17 @@
 
   }
 
-  // NEED TO THINK ABOUT THESE - not best way right now
+  // ************************************
+  // Goal: pass in the increment value
+  //       to update the hourly rate
+  // ************************************
   function increaseRate(increment){
     hourlyRate += increment;
   }
-
+  // ************************************
+  // Goal: pass in the decrement value
+  //       to update the hourly rate
+  // ************************************
   function decreaseRate(decrement) {
     if (hourlyRate + decrement < 0) {
       hourlyRate = 0;
@@ -59,10 +76,13 @@
 
   }
 
-
+  // ***********************************************
+  // Goal:   check table for 'checked' checkboxes
+  //         if 'checked' grab previous cell's 
+  //         value (rate) and push onto array
+  // Return: array
+  // ***********************************************
   function getAppliedRules () {
-    // function looks at the table for check marks
-    // if checked grab previous cell's value
     var appliedRules = [];
     $("tr.ruleRow").each(function() {
       var $this = $(this)
@@ -72,7 +92,7 @@
         var rateStr = $this.find('td.cellRate').html();
         
         // remove '$' and turn string to float
-        var rate = parseFloat(rateStr.split('$')[1]);
+        var rate = parseInt(rateStr.split('$')[1]);
         appliedRules.push(rate);
       }
     });
@@ -80,16 +100,22 @@
     return appliedRules;
   }
 
+  // ***********************************************
+  // Goal: hide the rule's form and display the 
+  //       rule table
+  // ***********************************************
   function revealRuleTable (event) {
     event.preventDefault();
     // hide the form 
-    $('form').hide();
+    $('.formView').hide();
 
     // reveal the rule table
     $('.displayRules').show();
   }
 
-
+  // ***********************************************
+  // Goal: method called when 'Add Rule' btn clicked
+  // ***********************************************
   function addRule (event) {
     event.preventDefault();
 
@@ -113,14 +139,18 @@
     $("#rate").val('');
 
     // convert rateStr to float
-    var rate = parseFloat($rateStr);
+    var rate = parseInt($rateStr);
 
     // append ruleName and corresponding rate to table of rules (initially hidden)
-    appendRule($ruleName, rate);
+    appendRuleToTable($ruleName, rate);
 
   }
 
-  function appendRule(title, rate) {
+  // ***********************************************
+  // Goal: use jQuery to append a new <tr> to 
+  //       table of rules
+  // ***********************************************
+  function appendRuleToTable(title, rate) {
     // make a table row
     var $tr = $('<tr class="ruleRow"></tr>');
 
