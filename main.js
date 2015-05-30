@@ -1,14 +1,13 @@
 (function() {
 
-   'use strict';
+  'use strict';
 
-   var hourlyRate = 0;
+  var hourlyRate = 0;
 
-  $(function init() {
-    $('#addRule').on('click', addRule);
-    $('#next').on('click', revealRuleTable);
-    $('#calculate').on('click', calcHourlyRate);
-  }); 
+  $('#addRule').on('click', addRule);
+  $('#next').on('click', revealRuleTable);
+  $('#calculate').on('click', calcHourlyRate);
+
 
   // ***********************************************
   // Goal: grab the value in Base Rate input field
@@ -78,7 +77,7 @@
 
   // ***********************************************
   // Goal:   check table for 'checked' checkboxes
-  //         if 'checked' grab previous cell's 
+  //         if 'checked' grab previous cell's
   //         value (rate) and push onto array
   // Return: array
   // ***********************************************
@@ -90,7 +89,6 @@
 
       if (checked) {
         var rateStr = $this.find('td.cellRate').html();
-        
         // remove '$' and turn string to float
         var rate = parseInt(rateStr.split('$')[1]);
         appliedRules.push(rate);
@@ -101,12 +99,12 @@
   }
 
   // ***********************************************
-  // Goal: hide the rule's form and display the 
+  // Goal: hide the rule's form and display the
   //       rule table
   // ***********************************************
   function revealRuleTable (event) {
     event.preventDefault();
-    // hide the form 
+    // hide the form
     $('.formView').hide();
 
     // reveal the rule table
@@ -147,7 +145,7 @@
   }
 
   // ***********************************************
-  // Goal: use jQuery to append a new <tr> to 
+  // Goal: use jQuery to append a new <tr> to
   //       table of rules
   // ***********************************************
   function appendRuleToTable(title, rate) {
